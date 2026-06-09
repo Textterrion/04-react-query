@@ -41,14 +41,17 @@ export default function App() {
       <SearchBar onSubmit={handleSearch} />
       {isLoading && <Loader />}
       {!isLoading && isError && <ErrorMessage />}
+      {!isLoading && !isError && data && data.results.length === 0 && (
+        <p>No results found.</p>
+      )}
+      {isSuccess && totalPages > 1 && (
+        <ReactPaginate totalPages={totalPages} page={page} setPage={setPage} />
+      )}
       {data && data.results.length > 0 && (
         <MovieGrid movies={data.results} onSelect={handleSelectMovie} />
       )}
       {selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={handleCloseModal} />
-      )}
-      {isSuccess && totalPages > 1 && (
-        <ReactPaginate totalPages={totalPages} page={page} setPage={setPage} />
       )}
     </div>
   );
